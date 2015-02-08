@@ -1,138 +1,243 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Cardboard Example</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<!DOCTYPE html><html lang="en" prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset="utf-8">
+    <title>VR Travel</title>
+    <meta name="description" content="Go Anywhere!">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300">
     <style>
-      body {
-        margin: 0px;
-        overflow: hidden;
-      }
-      #example {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="example"></div>
+        .pure-button{
+             display: inline-block;
+            zoom: 1;
+            line-height: normal;
+            white-space: nowrap;
+            vertical-align: baseline;
+            text-align: center;
+            cursor: pointer;
+            -webkit-user-drag: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            margin: 5px 0; text-decoration: none !important;
 
-	<script src="http://threejs.org/build/three.min.js"></script>
+            margin:20px; text-align:center; color: rgb(101, 101, 101); background-color: rgba(162, 172, 181, 0.62);
+            }
 
-  <script src="js/third-party/threejs/StereoEffect.js"></script>
-  <script src="js/third-party/threejs/DeviceOrientationControls.js"></script>
-  <script src="js/third-party/threejs/OrbitControls.js"></script>
+        body { margin: 0; padding: 0; border: 0; min-width: 320px; color: #777; }
+        html, button, input, select, textarea, .pure-g [class *= "pure-u"] { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 1.02em; }
+        p, td { line-height: 1.5; }
 
-  <script>
-    var camera, scene, renderer;
-    var effect, controls;
-    var element, container;
+        h1, h2, h3 { color: #4b4b4b; font-family: "Source Sans Pro", sans-serif; font-weight: 300; margin: 0 0 1.2em; }
+        h1 { font-size: 4.5em; color: #1f8dd6; margin: 0 0 .4em; }
+        h2 { font-size: 2em; color: #636363; }
+        h3 { font-size: 1.8em; color: #4b4b4b; margin: 1.8em 0 .8em }
+        h4 { font: bold 1em sans-serif; color: #636363; margin: 4em 0 1em; }
+        a { color: #4e99c7; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        p, pre { margin: 0 0 1.2em; }
+        ::selection { color: #fff; background: #328efd; }
+        ::-moz-selection { color: #fff; background: #328efd; }
 
-    var clock = new THREE.Clock();
-
-    init();
-    animate();
-
-    function init() {
-      renderer = new THREE.WebGLRenderer();
-      element = renderer.domElement;
-      container = document.getElementById('example');
-      container.appendChild(element);
-
-      effect = new THREE.StereoEffect(renderer);
-
-      scene = new THREE.Scene();
-
-      camera = new THREE.PerspectiveCamera(90, 1, 0.001, 700);
-      camera.position.set(0, 10, 0);
-      scene.add(camera);
-
-      controls = new THREE.OrbitControls(camera, element);
-      controls.rotateUp(Math.PI / 4);
-      controls.target.set(
-        camera.position.x + 0.1,
-        camera.position.y,
-        camera.position.z
-      );
-      controls.noZoom = true;
-      controls.noPan = true;
-
-      function setOrientationControls(e) {
-        if (!e.alpha) {
-          return;
+        @media (max-width:480px) {
+            h1 { font-size: 3em; }
+            h2 { font-size: 1.8em; }
+            h3 { font-size: 1.5em; }
+            td:first-child { white-space: normal; }
         }
 
-        controls = new THREE.DeviceOrientationControls(camera, true);
-        controls.connect();
-        controls.update();
+        .button-lg { margin: 5px 0; padding: .65em 1.6em; font-size: 105%; }
 
-        element.addEventListener('click', fullscreen, false);
+        input[type="text"] { border-radius: 0 !important; }
 
-        window.removeEventListener('deviceorientation', setOrientationControls, true);
-      }
-      window.addEventListener('deviceorientation', setOrientationControls, true);
+        /* autoComplete styles */
+        .autocomplete-suggestions {
+            text-align: left; cursor: default; border: 1px solid #ccc; border-top: 0; background: #fff; box-shadow: -1px 1px 3px rgba(0,0,0,.1);
 
-	var sphere = new THREE.Mesh(
-			new THREE.SphereGeometry(100, 20, 20),
-			new THREE.MeshBasicMaterial({
-				map: THREE.ImageUtils.loadTexture('kupferbrink.jpg')
-			})
-		);
-		sphere.scale.x = -1;
-	scene.add(sphere);
+            /* core styles should not be changed */
+            position: absolute; display: none; z-index: 9999; max-height: 254px; overflow: hidden; overflow-y: auto; box-sizing: border-box;
+        }
+        .autocomplete-suggestion { position: relative; padding: 0 .6em; line-height: 23px; white-space: nowrap; overflow: hidden; font-size: 1.02em; color: #333; }
+        .autocomplete-suggestion b { font-weight: normal; color: #1f8dd6; }
+        .autocomplete-suggestion.selected { background: #f0f0f0; }
 
 
-   
-  
-      window.addEventListener('resize', resize, false);
-      setTimeout(resize, 1);
-    }
+        input {
+            background-color:transparent;
+            border: none ;
+            box-shadow: none;
+            font-size: 26px;
+            line-height: 26px;
+            width: 200px !important ;
+            border-bottom: 2px solid black;
+            border-radius: 0 !important;
+            text-overflow: ellipsis;
+        }
 
-    function resize() {
-      var width = container.offsetWidth;
-      var height = container.offsetHeight;
+        .small {
+            font-size: 2rem;
+            font-weight: 100;
+        }
 
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
+        #bg{
+          position: fixed;
+          left: -124px;
+          right: 0;
+          top: 31px;
+          z-index: -1;
 
-      renderer.setSize(width, height);
-      effect.setSize(width, height);
-    }
+          margin: -40px;
+          transform: scale(1.2);
+          display: block;
+          background-image: url('http://i.imgur.com/BOaFS6X.jpg');
+            background-repeat: no-repeat;
 
-    function update(dt) {
-      resize();
+          width: 100%;
+          height: 100%;
+        }
 
-      camera.updateProjectionMatrix();
+        #arrowCntr{
+            opacity: 0;
+            z-index: -1;
+            width: 580px;
+            height: 370px;
+            position:absolute; left:
+            70%;color: #1F8DD6;
+            top: -5%;
+        }
 
-      controls.update(dt);
-    }
+        #arrowImage{
+            background-image: url(http://s10.postimg.org/b9tin4ycp/arrow.png);
+            width: 100%;
+            height: 100%;
+            transform: scale(.5);
+            background-repeat: no-repeat
+        }
 
-    function render(dt) {
-      effect.render(scene, camera);
-    }
+        #city-input{
+            width:100%;max-width:600px;outline:0; margin-bottom: 15px
+        }
 
-    function animate(t) {
-      requestAnimationFrame(animate);
+        #surprise{ margin-bottom: 70px; }
 
-      update(clock.getDelta());
-      render(clock.getDelta());
-    }
+    </style>
+</head>
 
-    function fullscreen() {
-      if (container.requestFullscreen) {
-        container.requestFullscreen();
-      } else if (container.msRequestFullscreen) {
-        container.msRequestFullscreen();
-      } else if (container.mozRequestFullScreen) {
-        container.mozRequestFullScreen();
-      } else if (container.webkitRequestFullscreen) {
-        container.webkitRequestFullscreen();
-      }
-    }
-  </script>
-  </body>
+<div id ="bg"> </div>
+<body>
+    <div id="arrowCntr"> <div id="arrowImage"> </div>  </div>
+
+
+    <div style="max-width:900px;padding:0 10px;margin:40px auto;text-align:center">
+        <h1>VR<span class="small"> travel </span> </h1>
+        <h2>I am interested in visiting...</h2>
+        <form class="pure-form" >
+            <input id="city-input" autofocus type="text" name="q" id="citsy" placeholder="Enter city"> </input>
+        </form>
+
+       <h2 style="display: inline; padding-right:12px;">  or </h2>
+        <a id="surprise" class="pure-button button-lg">Surprise me!</a>
+
+        <div id="error" style="color: red" hidden> Please enter a valid destination </div>
+        <div id="success" style="color: green" hidden>Yay, click on the extension to get started!</div>
+        <div id="url" hidden>Error!</div>
+
+        <div style="padding-top: 50px" id= "learnMore"> </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://dl.dropboxusercontent.com/u/8042093/autocomplete.js"></script>
+    <script>
+        var choices = ['Amsterdam', 'Ankara', 'Athens', 'Auckland', 'Austin', 'Baghdad', 'Bali', 'Bangalore', 'Bangkok', 'Barcelona', 'Beijing', 'Berlin', 'Boston', 'Brussels', 'Budapest', 'Buenos Aires', 'Cairo', 'Cape Town', 'Casablanca', 'Chennai', 'Chicago', 'Copenhagen', 'Dallas', 'Delhi', 'Dubai', 'Dublin', 'Edinburgh', 'El Paso', 'Florence', 'Fort Worth', 'Glasgow', 'Guangzhou', 'Hangzhou', 'Harbin', 'Ho Chi Minh City', 'Hong Kong', 'Honolulu', 'Houston', 'Indianapolis', 'Istanbul', 'Jacksonville', 'Jaipur', 'Jakarta', 'Johannesburg', 'Lagos', 'Lahore', 'Lima', 'London', 'Los Angeles', 'Madrid', 'Melbourne', 'Memphis', 'Mexico City', 'Milan', 'Montreal', 'Moscow', 'Mumbai', 'Munich', 'Nanjing', 'New Orleans', 'New York', 'Orlando', 'Paris', 'Philadelphia', 'Phoenix', 'Phuket', 'Prague', 'Pune', 'Rio de Janeiro', 'Riyadh', 'Rome', 'Saint Petersburg', 'San Antonio', 'San Diego', 'San Francisco', 'San Jose', 'Santiago', 'Sao Paulo', 'Seoul', 'Shanghai', 'Singapore', 'Singapore', 'Suzhou', 'Sydney', 'Tokyo', 'Toronto', 'Venice', 'Vienna'];
+
+        var lowerCaseChoices = choices.map(function(value) {
+          return value.toLowerCase();
+        });
+
+        $(document).ready(function(){
+            validCity = false;
+            var checkCity = function(){
+                var city = $('input[name="q"]').val().toLowerCase();
+
+                if (city.length < 3) return
+
+                if ( lowerCaseChoices.indexOf(city) === -1) {
+                    //Invalid choice, show error
+                    $("#learnMore").fadeOut()
+                    $("#success").fadeOut('400');
+
+                    $("#arrowCntr").fadeOut('400');
+                    $("#error").fadeIn('400');
+                    validCity = false;
+                    return
+                }
+
+                console.log("Checking city...")
+
+                $("#error").fadeOut('400');
+
+                $("#success").fadeIn('400');
+
+                var url = "http://fernandotrujano.com/serve2/sphere.html?"+city+"0.jpg"
+
+                $('#url').html(url)
+                console.log(url);
+
+                if (!validCity){
+                    $("#arrowCntr").show().animate({
+                            opacity: 1,
+                            top: "-10%",
+                          }, 800);
+
+                    setTimeout(function(){
+                        console.log("LM")
+                        $("#learnMore").html('<h2 style="margin: 5px"> Enjoying the view? </h2> <a " class="pure-button button-lg" style="background-color: rgba(95, 157, 73, 0.48); position: relative; top: 3px; margin: 0px 5px 0px -10px;" target="_blank" href= "http://www.tripadvisor.com/Search?q='+ city + '"> <img src="https://5to9branding.files.wordpress.com/2012/01/tripadvisor.png" style="width:45px; "/> <span style="color: #414141 ;position: relative; top: -5px"> Plan my trip! </span> </a>').show()
+                    }, 10000);
+                }
+
+                validCity = true;
+            }
+
+            $(window).keydown(function(event){
+              if(event.keyCode == 13) { //Ignore enter card
+                event.preventDefault();
+                checkCity();
+                return false;
+              }
+            });
+
+            $('input[name="q"]').focus(function(){
+                $("#error").fadeOut('400');
+            })
+
+            setInterval(function(){
+                console.log(validCity)
+                checkCity();
+            }, 500);
+
+
+            $("#surprise").click(function(){
+                var city =choices[Math.floor(Math.random()*choices.length)];
+                 $('input[name="q"]').val(city)
+                 checkCity();
+            })
+
+        })
+        $(function(){
+            $('#city-input').autoComplete({
+                minChars: 1,
+                source: function(term, suggest){
+                    term = term.toLowerCase();
+
+                    var suggestions = [];
+                    for (i=0;i<choices.length;i++)
+                        if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
+                    suggest(suggestions);
+                }
+            });
+        });
+
+
+    </script>
+</body>
 </html>
