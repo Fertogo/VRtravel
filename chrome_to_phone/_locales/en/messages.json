@@ -1,10 +1,10 @@
 {
   "app_name": {
-    "message": "Google Chrome to Phone Extension",
+    "message": "VRtravel Extension",
     "description": "Name of the application"
   },
   "app_name_short": {
-    "message": "Chrome to Phone",
+    "message": "VRtravel",
     "description": "Short name of the application"
   },
   "app_desc": {
@@ -30,7 +30,7 @@
     }
   },
   "sign_in_required_message": {
-    "message": "Please $link$ to Chrome to Phone.",
+    "message": "Please $link$ to view with Cardboard.",
     "description": "Notice when sign in is required. $link$ is automatically replaced with 'sign in'.",
     "placeholders": {
       "link": {
