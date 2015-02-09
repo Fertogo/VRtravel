@@ -1,13 +1,15 @@
-####Instalation
-Download `VRtravel Extension.crx' and install in Chrome. 
+##VRtravel
+
+######Virtually immerse yourself in the beauties of the world without leaving your room. 
+
+####Installation
+Download `VRtravel Extension.crx' from this repo and install in Chrome. 
 You can now visit http://fernandotrujano.com/VRtravel
 
 ####Inspiration
-
 We wanted to explore the beauties of the world by getting an immersive feel of a city before visiting. Using today's technology we can acomplish this through virtual reality by using a smartphone and Google Cardboard. With this app, we can easily decide wether we want to visit Athens or St. Petersburg by getting as close as possible to the real thing without leaving our room!
 
 ####How does it work?
-
 1. Select a city on our website (or let us pick one for you at random).
 2. Click on our Chrome extension.
 3. Enjoy the photosphere we automatically sent to your Android device!
